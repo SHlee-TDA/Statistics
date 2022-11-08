@@ -11,3 +11,9 @@ def bayes_theorem(p_a, p_b_given_a, p_b_given_not_a):
     # calculate P(A|B)
     p_a_given_b = p_b_given_a*p_a/p_b
     return p_a_given_b
+
+def bayes_theorem_pmf(prior, likelihood):
+    numerator = likelihood * prior
+    denumerator = numerator.sum()
+    posterior = numerator/denumerator
+    return posterior
