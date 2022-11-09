@@ -1,61 +1,46 @@
-# 베이즈 정리와 그 응용
+# Introduction to Bayesian Statistics : From Practical Example to Python Implementation 
 
-베이즈 정리는 수학적으로는 복잡한 조건부 확률을 비교적 쉽게 계산할 수 있게 해준다.
-그러나 데이터 분석의 관점에서는 문제를 바라보는 또 다른 관점을 제시해준다.
+## 1. Introduction
 
-기존의 통계학은 빈도주의를 따른다.
-빈도주의에 따르면, 데이터는 어떤 미지의 '상수' $\theta$를 모수로 가지는 확률분포를 가정하며, 표본은 이 확률분포로부터 얻어지게 된다고 생각한다.
-데이터는 모수 $\theta$에 대한 정보들을 담고 있다.
-반면, 베이즈주의에 따르면, 모수 '$\theta$'가 어떤 확률분포를 따르는 값이다. 
-모수가 따르는 확률분포는 연구자의 경험이나 믿음에 근거한 주관적 확률분포로, 이를 '사전분포'라 부른다.
-베이즈주의에서는 데이터를 얻어서 사전분포를 업데이트해나간다.
-그렇게 얻어진 분포를 사후분포라고 한다.
+> 
+> 당신이 어떤 암을 진단하는 대학병원 의사라고 해봅시다.
+> 어느 날, 한 환자가 찾아왔고 그 환자가 당신에게 암 진찰을 부탁합니다.
+> 당신이 진찰을 했더니 불행히도 환자는 암에 대해 양성 반응을 보였습니다.
+> 환자는 아무리 당신이 대학병원 의사라 해도 당장 그 현실을 믿지 못할 것입니다.
+> 그래서 그 환자는 당신의 진찰 결과에 대한 신뢰도를 '계산'하고자 합니다.
+> 이것을 어떻게 계산할 수 있을까요?
+>  
 
-
-
-> Theorem) Bayes Theorem
-
-
-# 예제
-
-어느 의사가 하나의 방법으로 암 진단을 수행한다고 하자.
-사람은 암에 걸렸거나 그렇지 않다. (?)
-의사의 진찰은 성공하거나 실패한다. (??)
-이때, 임의로 선택된 환자가 이 의사에게 진찰을 받아 암 양성진단을 받았을 때, 이 환자가 진짜 암에 걸렸을 가능성은 얼마나 될까?
-확률의 기호를 이요해 표현하면 우리가 구하고자 하는 값은 다음과 같다.
-
-$P(Cancer = True | Test = Ture)$
-
-의사의 입장에서 생각해보면 의사는 이 진찰방법을 사용하기 전에 먼저 학계에 보고된 수치를 고려할 것이다.
-학계에서는 암환자를 대상으로 이 진찰방법을 실험하였고, 이 연구를 통해 다음 확률을 얻었다고 하자.
-
-$P(Test = True | Cancer = True)=0.85$
-
-이 값은 마치 이 진찰방법이 85%의 확률로 성공적인 진찰을 한다는 것을 보여준다 생각하기 쉽다.
-그러나 사람들은 '기저율'에 대해 고려하지 않는 오류를 범하곤 한다.
-이 문제에 대해서 기저율은 '암환자를 택할 확률'이다. 
-실제 암환자에 대한 비율이 0.0002라고 연구를 통해 알게되었다고 하자.
-즉, $P(Cancer = True) = 0.0002$라고 주어졌다.
-
-이제 베이즈 정리를 이용하면
-
-$P(Cancer = True | Test = True) = \frac{P(Test = True | Cancer = True)P(Cancer = True)}{P(Test = True)} = 0.85*0.0002/P(Test = True)$
-이고,
-
-$P(Test = True) = P(Test=True|Cancer=True) * P(Cancer=True) + P(Test=True|Cancer=False) * P(Cancer=False) = 0.85 * 0.0002 + P(Test = True | Cancer = False) * 0.9998$
-
-로 계산할 수 있으므로, 우리는 $P(Test = True | Cancer = False)$의 값만 안다면 원하는 바를 구할 수 있다.
-그러나, 이 정보를 얻기 위해서는 우린 한 가지 더 정보를 알아야 한다.
-
-앞서 연구진이 이 진단방법에 대해 연구하면서 암 환자가 아닌 사람에 대해서 이 진찰방법이 암 환자가 아님을 검증할 확률도 얻었다고 하자.
-이 값은 $P(Test = False | Cancer = False)$가 된다. 
-이 값이 0.95로 주어졌다면, 이제 우리가 원하는 $P(Test = True | Cancer = False)$의 값은 0.05 임을 알 수 있다.
-
-따라서 최종적으로 $P(Test = True)$의 값은 약  0.05016이 되고, 이로부터 $P(Cancer=True | Test=True)$은 약 0.0033임을 얻게 된다.
-다시말해, 이 진찰은 암 진단이 맞다고 해도 진짜 암일 가능성이 매우 낮은 형편없는 진찰이 된다.
+위 예제는 베이즈 통계학을 처음 공부할 때 제시되곤 하는 대표적인 예제입니다.
+베이즈 통계학은 위와 같은 문제를 연구하고 해결하는 방법을 제시합니다.
+특히, 위 문제가 보여주듯 베이즈 통계학은 굉장히 현실적인 문제에 응용될 수 있으며 특유의 철학 때문에 머신러닝에도 자주 응용됩니다.
+그러므로 베이즈 통계학을 공부해두면 굉장히 많은 분야에서 유용하게 사용할 수 있을 것입니다.
 
 
+## 2. Contents Plan
 
+### 2.1 Diagnosis Example
+    암진단 문제를 통해 베이즈 정리가 어떤 문제에 사용할 수 있는지를 소개.
+### 2.2 Bayes Theorem and its meaning
+    베이즈 정리를 명시하고 그것의 의미를 소개.
+    특히, '사전분포', '가능도', '사후분포'의 개념을 예제를 통해 이해할 수 있도록함.
+### 2.3 Python Implementation
+    베이즈 정리를 통해 조건부확률을 계산할 수 있는 간단한 Python 함수를 구현.
+    이를 확장하여 데이터로부터 베이즈 추론을 수행할 수 있는 Python 함수를 구현.
+### 2.4 [Statistics] Bayesian Estimation : Point Estimator
+
+### 2.5 [Machine Learning] Naive Bayes Model
+
+
+## 3. Python Script
+    `bayes_theorem.py` 사용법
+
+
+## 4. References
+
+> 1. Sunyoung Shin, 2022, Mathematical Statistics, lecture notes, Department of Mathematics MATH530, POSTECH, derivered 31 Dec - 6 Nov 2022.
+> 2. Casella, George, and Roger L. Berger. Statistical inference. Cengage Learning, 2021.
+> 3.  
 
 
 
