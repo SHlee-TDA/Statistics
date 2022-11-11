@@ -40,8 +40,7 @@
 
 > 1. Sunyoung Shin, 2022, Mathematical Statistics, lecture notes, Department of Mathematics MATH530, POSTECH, derivered 31 Dec - 6 Nov 2022.
 > 2. Casella, George, and Roger L. Berger. Statistical inference. Cengage Learning, 2021.
-> 3.  
-
+> 3. Deisenroth, Marc Peter, A. Aldo Faisal, and Cheng Soon Ong. Mathematics for machine learning. Cambridge University Press, 2020.
 
 
 
